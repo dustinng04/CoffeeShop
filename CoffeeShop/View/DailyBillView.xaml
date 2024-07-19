@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="CoffeeShop.View.DailyBillView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CoffeeShop.View" xmlns:viewmodel="clr-namespace:CoffeeShop.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <viewmodel:BillInfosConverter x:Key="BillInfosConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Daily Bills" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,0" Grid.Row="0"/>
+
+        <Grid Grid.Row="1" Margin="20,10,20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Content="EXPORT" Command="{Binding ExportCommand}" Grid.Column="1" Margin="10" HorizontalAlignment="Right"/>
+        </Grid>
+
+        <DataGrid CanUserAddRows="False" ItemsSource="{Binding Bills}" AutoGenerateColumns="False" Margin="20,10,20,20" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Bill.Id}"/>
+                <DataGridTextColumn Header="Checkin" Binding="{Binding Bill.DateCheckIn}"/>
+                <DataGridTextColumn Header="Checkout" Binding="{Binding Bill.DateCheckOut}"/>
+                <DataGridTextColumn Header="Food Details" Binding="{Binding Bill.BillInfos, Converter={StaticResource BillInfosConverter}}" />
+                <DataGridTextColumn Header="Price" Binding="{Binding TotalPrice}"/>
+                <DataGridTextColumn Header="Created By" Binding="{Binding Bill.IssuerId}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

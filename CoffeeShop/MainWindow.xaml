@@ -1,0 +1,80 @@
+﻿<Window x:Class="CoffeeShop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CoffeeShop" xmlns:viewmodel="clr-namespace:CoffeeShop.ViewModel" xmlns:local1="clr-namespace:CoffeeShop.View" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodel:TableStatusViewModel}">
+            <local:TableStatusView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodel:BillsViewModel}">
+            <local1:BillView/>  
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodel:ManageAccountViewModel}">
+            <local1:ManageAccountView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodel:OrdersViewModel}">
+            <local1:OrdersView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodel:DailyBillViewModel}">
+            <local1:DailyBillView/>
+        </DataTemplate>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#9B4444"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Ellipse Name="Dot" Fill="White" Width="5" Height="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="Collapsed"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Dot" Property="Visibility" Value="Visible"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#E3E3E3">
+        <!-- Left Panel -->
+        <Border Background="#5C1D1D" HorizontalAlignment="Left" Width="200">
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20">
+                <Image Source="coffee-logo.png" Height="50" Width="50" Margin="0,0,0,20"/>
+                <TextBlock Text="Welcome, dustinng04" Foreground="White" FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,20"/>
+                <!-- Admin Menu (Type == 1) -->
+                <StackPanel Visibility="{Binding IsAdminVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Button Content="Tables status" Style="{StaticResource MenuButtonStyle}" Command="{Binding NavigateToTableStatusCommand}"/>
+                    <Button Content="Dashboard" Name="DashboardBtn" Style="{StaticResource MenuButtonStyle}" />
+                    <Button Content="Bills" Name="BillBtn" Style="{StaticResource MenuButtonStyle}" Command="{Binding NavigateToBillsCommand}"/>
+                    <Button Content="Accounts" Name="AccountBtn" Style="{StaticResource MenuButtonStyle}" Command="{Binding NavigateToAccountsCommand}"/>
+                </StackPanel>
+
+                <!-- Staff Menu (Type == 2) -->
+                <StackPanel Visibility="{Binding IsStaffVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Button Content="Orders" Style="{StaticResource MenuButtonStyle}" Command="{Binding NavigateToOrdersCommand}"/>
+                    <Button Content="Daily Bills" Style="{StaticResource MenuButtonStyle}" Command="{Binding NavigateToDailyBillsCommand}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Margin="220,20,20,20">
+            <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+        </Grid>
+
+    </Grid>
+</Window>
