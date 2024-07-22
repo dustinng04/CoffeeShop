@@ -11,6 +11,9 @@
         <DataTemplate DataType="{x:Type viewmodel:TableStatusViewModel}">
             <local:TableStatusView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodel:DashboardViewModel}">
+            <local1:DashboardView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodel:BillsViewModel}">
             <local1:BillView/>  
         </DataTemplate>
@@ -58,7 +61,7 @@
                 <!-- Admin Menu (Type == 1) -->
                 <StackPanel Visibility="{Binding IsAdminVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Button Content="Tables status" Style="{StaticResource MenuButtonStyle}" Command="{Binding NavigateToTableStatusCommand}"/>
-                    <Button Content="Dashboard" Name="DashboardBtn" Style="{StaticResource MenuButtonStyle}" />
+                    <Button Content="Dashboard" Name="DashboardBtn" Style="{StaticResource MenuButtonStyle}" Command="{Binding NavigateToDashboardCommand}" />
                     <Button Content="Bills" Name="BillBtn" Style="{StaticResource MenuButtonStyle}" Command="{Binding NavigateToBillsCommand}"/>
                     <Button Content="Accounts" Name="AccountBtn" Style="{StaticResource MenuButtonStyle}" Command="{Binding NavigateToAccountsCommand}"/>
                 </StackPanel>

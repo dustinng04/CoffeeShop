@@ -143,6 +143,9 @@ namespace CoffeeShop.ViewModel
                     worksheet.Cells[row, 1].Value = bill.Bill.Id;
                     worksheet.Cells[row, 2].Value = bill.Bill.DateCheckIn;
                     worksheet.Cells[row, 3].Value = bill.Bill.DateCheckOut;
+                    // Format the cells as dates
+                    worksheet.Cells[row, 2].Style.Numberformat.Format = "yyyy-mm-dd hh:mm:ss";
+                    worksheet.Cells[row, 3].Style.Numberformat.Format = "yyyy-mm-dd hh:mm:ss";
                     worksheet.Cells[row, 4].Value = string.Join("\n ", bill.Bill.BillInfos.Select(bi => $"{bi.IdFoodNavigation?.Name ?? "Unknown"} x{bi.Quantity}"));
                     worksheet.Cells[row, 4].Style.WrapText = true;
                     worksheet.Cells[row, 5].Value = bill.TotalPrice;

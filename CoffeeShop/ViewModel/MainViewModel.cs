@@ -43,7 +43,7 @@ namespace CoffeeShop.ViewModel
         public ICommand NavigateToAccountsCommand { get; }
         public ICommand NavigateToOrdersCommand {  get; }
         public ICommand NavigateToDailyBillsCommand { get; }
-
+        public ICommand NavigateToDashboardCommand {  get; }
         public MainViewModel()
         {
 			NavigateToTableStatusCommand = new RelayCommand(NavigateToTableStatus);
@@ -51,11 +51,10 @@ namespace CoffeeShop.ViewModel
             NavigateToAccountsCommand = new RelayCommand(NavigateToAccounts);
             NavigateToOrdersCommand = new RelayCommand(NavigateToOrders);
             NavigateToDailyBillsCommand = new RelayCommand(NavigateToDailyBills);
-			// Set initial view
-			InitialView();
+            NavigateToDashboardCommand = new RelayCommand(NavigateToDashboard);
+            // Set initial view
+            InitialView();
         }
-
-
         private void InitialView()
         {
 			if (IsAdminVisible)
@@ -72,6 +71,12 @@ namespace CoffeeShop.ViewModel
         {
             CurrentViewModel = new TableStatusViewModel();
         }
+
+        private void NavigateToDashboard()
+        {
+            CurrentViewModel = new DashboardViewModel();
+        }
+
 
         private void NavigateToBills()
         {

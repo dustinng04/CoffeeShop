@@ -52,20 +52,12 @@ namespace CoffeeShop.ViewModel
 
 		private void Login()
 		{
-			if (Username == "admin" && Password == "admin123")
+			var user = _context.Accounts.FirstOrDefault(a => a.Name == Username && a.Password == Password);
+			if (user == null)
 			{
-				var account = new Account { Name = Username, Type = 0 }; // Admin
-				OpenMainWindow(account);
-			}
-			else if (Username == "staff" && Password == "staff123")
-			{
-				var account = _context.Accounts.FirstOrDefault(x => x.Name == Username);
-				OpenMainWindow(account);
-			}
-			else
-			{
-				MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-			}
+                MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+			OpenMainWindow(user);
 		}
 
 		private void OpenMainWindow(Account account)
